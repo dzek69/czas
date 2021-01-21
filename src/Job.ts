@@ -16,7 +16,7 @@ interface CzasCallbacks {
 class Job {
     private readonly _czasCallbacks: CzasCallbacks;
 
-    private readonly _jobs: schedule.Job[] = [];
+    private readonly _jobs: (schedule.Job | null)[] = [];
 
     private readonly _action: ActionParam;
 
@@ -56,7 +56,7 @@ class Job {
     }
 
     public cancel() {
-        this._jobs.forEach(job => job.cancel());
+        this._jobs.forEach(job => job?.cancel());
         this._czasCallbacks.onCancel(this);
     }
 
