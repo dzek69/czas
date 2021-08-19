@@ -1,4 +1,4 @@
-import type { Range } from "node-schedule";
+import type { Range as NSRange } from "node-schedule";
 
 interface SerializedRange {
     start?: number;
@@ -6,7 +6,7 @@ interface SerializedRange {
     step?: number;
 }
 
-type Occurence = number | Range;
+type Occurence = number | NSRange;
 type Occ = Occurence | Occurence[];
 
 type OccurenceWithAny = Occurence | "*" | SerializedRange;
@@ -47,7 +47,7 @@ type SingleDateConfig = number;
 type OneConfig = RecurringConfigWithAny | SingleDateConfig;
 type DateConfig = OneConfig | OneConfig[];
 
-type Action = Record<string, unknown>;
+interface Action { [key: string]: unknown }
 type ActionParam = Action | Action[];
 
 interface SerializedConfig {

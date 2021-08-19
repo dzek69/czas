@@ -1,7 +1,7 @@
 import { Job } from "./Job.js";
 import type { RunAction } from "./Job.js";
 import type { ActionParam, DateConfig, SerializedConfig } from "./types";
-import { Range } from "node-schedule";
+import { Range as NSRange } from "node-schedule";
 
 interface Persistence {
     add: (jobConfig: DateConfig, action: ActionParam) => Promise<string>;
@@ -33,7 +33,6 @@ class Czas {
 
         const list = await this._persistence.load();
         await Promise.all(
-            // eslint-disable-next-line @typescript-eslint/promise-function-async
             list.map(item => this._add(item.config, item.action, item.id)),
         );
 
@@ -59,7 +58,7 @@ class Czas {
         return this._add(jobConfig, action);
     }
 
-    private readonly _onJobCancel = async (job: Job) => {
+    private readonly _onJobCancel = (job: Job) => {
         // @TODO first remove from DB, then cancel?
         this._list = this._list.filter(j => j !== job);
         this._persistence.remove(job.id);
@@ -72,7 +71,7 @@ class Czas {
 
 export {
     Czas,
-    Range,
+    NSRange as Range,
 };
 
 export type {
