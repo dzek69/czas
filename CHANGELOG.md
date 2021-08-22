@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [UNRELEASED]
 (nothing yet)
 
+## [1.0.0-beta.6] - 2021-08-22
+### Breaking
+- some type exports renamed
+
 ## [1.0.0-beta.5] - 2021-08-19
 ### Added
 - some typescript exports

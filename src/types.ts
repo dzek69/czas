@@ -64,6 +64,6 @@ export type {
     Occ,
     OccurenceWithAny,
     OccAny,
-    DateConfig, Action, ActionParam,
+    OneConfig, DateConfig, Action, ActionParam,
     SerializedConfig,
 };
