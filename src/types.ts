@@ -53,6 +53,7 @@ type ActionParam = Action | Action[];
 interface SerializedConfig {
     config: DateConfig;
     action: ActionParam;
+    name: string;
     id: string;
 }
 

@@ -12,17 +12,18 @@ import { Czas, Range } from "../esm/index.js";
     const collection = db.collection("czas");
 
     const callbacks = {
-        async add(config, action) {
+        async add(config, action, name) {
             const i = await collection.insertOne({
                 config,
                 action,
+                name,
             });
             return i.insertedId;
         }
     }
 
-    const actionRunner = (action, runDate) => {
-        console.log("running", action, "at", Date.now(), "that was planned on", runDate.getTime());
+    const actionRunner = (action, runDate, name) => {
+        console.log("running", name, action, "at", Date.now(), "that was planned on", runDate.getTime());
     }
 
     const czas = new Czas(callbacks, actionRunner);

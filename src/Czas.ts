@@ -4,7 +4,7 @@ import type { ActionParam, DateConfig, SerializedConfig } from "./types";
 import { Range as NSRange } from "node-schedule";
 
 interface Persistence {
-    add: (jobConfig: DateConfig, action: ActionParam) => Promise<string>;
+    add: (jobConfig: DateConfig, action: ActionParam, name: string) => Promise<string>;
     remove: (id: string) => void;
     load?: () => Promise<SerializedConfig[]>;
     onLoad?: () => void;
@@ -33,20 +33,20 @@ class Czas {
 
         const list = await this._persistence.load();
         await Promise.all(
-            list.map(item => this._add(item.config, item.action, item.id)),
+            list.map(item => this._add(item.config, item.action, item.name, item.id)),
         );
 
         this._persistence.onLoad?.();
     }
 
-    private async _add(jobConfig: DateConfig, action: ActionParam, id?: string) {
+    private async _add(jobConfig: DateConfig, action: ActionParam, name: string, id?: string) {
         let storedId = id;
 
         if (!storedId) {
-            storedId = await this._persistence.add(jobConfig, action);
+            storedId = await this._persistence.add(jobConfig, action, name);
         }
 
-        const job = new Job(jobConfig, action, storedId, {
+        const job = new Job(jobConfig, action, name, storedId, {
             runAction: this._runAction,
             onCancel: this._onJobCancel,
         });
@@ -54,8 +54,8 @@ class Czas {
         return job;
     }
 
-    public async add(jobConfig: DateConfig, action: ActionParam) {
-        return this._add(jobConfig, action);
+    public async add(jobConfig: DateConfig, action: ActionParam, name = "(Unnamed job)") {
+        return this._add(jobConfig, action, name);
     }
 
     private readonly _onJobCancel = (job: Job) => {

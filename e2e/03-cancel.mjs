@@ -32,8 +32,8 @@ import { Czas, Range } from "../esm/index.js";
         }
     }
 
-    const actionRunner = (action, runDate) => {
-        console.log("running", action, "at", Date.now(), "that was planned on", runDate.getTime());
+    const actionRunner = (action, runDate, name) => {
+        console.log("running", name, action, "at", Date.now(), "that was planned on", runDate.getTime());
     }
 
     const czas = new Czas(callbacks, actionRunner);
