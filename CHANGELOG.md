@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [UNRELEASED]
 (nothing yet)
 
+## [1.2.0] - 2022-01-19
+### Added
+- support for jobs updating
+- Job type export
+
 ## [1.1.0] - 2022-01-07
 ### Added
 - name support for jobs

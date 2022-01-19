@@ -5,6 +5,7 @@ import { Range as NSRange } from "node-schedule";
 
 interface Persistence {
     add: (jobConfig: DateConfig, action: ActionParam, name: string) => Promise<string>;
+    update: (id: string, jobConfig: DateConfig, action: ActionParam, name: string) => Promise<void>;
     remove: (id: string) => void;
     load?: () => Promise<SerializedConfig[]>;
     onLoad?: () => void;
@@ -49,6 +50,7 @@ class Czas {
         const job = new Job(jobConfig, action, name, storedId, {
             runAction: this._runAction,
             onCancel: this._onJobCancel,
+            onUpdate: this._onJobUpdate,
         });
         this._list.push(job);
         return job;
@@ -62,6 +64,10 @@ class Czas {
         // @TODO first remove from DB, then cancel?
         this._list = this._list.filter(j => j !== job);
         this._persistence.remove(job.id);
+    };
+
+    private readonly _onJobUpdate = async (job: Job) => {
+        await this._persistence.update(job.id, job.config, job.action, job.name);
     };
 
     public get list() {

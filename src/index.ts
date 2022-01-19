@@ -4,4 +4,4 @@ export type {
     DateConfig, OneConfig as SingleDateConfig,
     ActionParam as Action, Action as SingleAction, // @todo rename those in the code
 } from "./types.js";
-export type { RunAction } from "./Job.js";
+export type { RunAction, Job } from "./Job.js";

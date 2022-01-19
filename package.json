@@ -1,13 +1,13 @@
 {
   "name": "czas",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": "Jacek Nowacki",
   "license": "MIT",
   "scripts": {
     "test": "NODE_ENV=test jest",
     "docs": "typedoc src/index.ts --out docs --listInvalidSymbolLinks --includes tutorials --theme pages-plugin --includeVersion",
     "compile": "yarn compile:esm && yarn compile:cjs",
-    "compile:esm": "rm -rf esm && tsc && node ./build-scripts/compile.esm.after.mjs",
+    "compile:esm": "rm -rf esm && tsc --project tsconfig.esm.json && node ./build-scripts/compile.esm.after.mjs",
     "compile:cjs": "rm -rf dist && tsc --project tsconfig.cjs.json && node ./build-scripts/compile.cjs.after.mjs",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src --ext .ts,.tsx,.js,.jsx,.mjs",
@@ -60,7 +60,7 @@
     }
   },
   "libraryTemplate": {
-    "version": "3.3.2",
+    "version": "3.4.0",
     "language": "typescript",
     "fixDefaultForCommonJS": true,
     "jsx": false
