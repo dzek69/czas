@@ -5,7 +5,7 @@ import { fixSerializedRule } from "./utils.js";
 
 import type { ActionParam, DateConfig } from "./types";
 
-type RunAction = (action: ActionParam, configuredRunDate: Date, name: string) => void;
+type RunAction = (action: ActionParam, configuredRunDate: Date, name: string, job: Job) => void;
 type CancelCallback = (job: Job) => void;
 type UpdateCallback = (job: Job) => void;
 
@@ -30,13 +30,13 @@ class Job {
 
     private _name: string;
 
-    private _runAction(configuredRunDate: Date) {
+    private _runAction(configuredRunDate: Date, job: Job) {
         const t = configuredRunDate.getTime();
         if (this._lastRun === t) {
             return; // already run by other rule
         }
         this._lastRun = t;
-        this._czasCallbacks.runAction(this._action, configuredRunDate, this._name);
+        this._czasCallbacks.runAction(this._action, configuredRunDate, this._name, job);
     }
 
     public constructor(
@@ -55,13 +55,13 @@ class Job {
         this._jobs = makeArray(this._jobConfig).map((options) => {
             if (typeof options === "number") {
                 return schedule.scheduleJob(new Date(options), (configuredRunDate) => {
-                    this._runAction(configuredRunDate);
+                    this._runAction(configuredRunDate, this);
                 });
             }
 
             const r = fixSerializedRule(options);
             return schedule.scheduleJob(r.rule, (configuredRunDate) => {
-                this._runAction(configuredRunDate);
+                this._runAction(configuredRunDate, this);
             });
         });
     }

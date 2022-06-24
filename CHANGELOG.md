@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [UNRELEASED]
 (nothing yet)
 
+## [1.3.0-beta.1] - 2022-06-24
+### Added
+- job argument is be passed when running the job
+### Dev
+- dev deps upgrades
+
 ## [1.2.0] - 2022-01-19
 ### Added
 - support for jobs updating
